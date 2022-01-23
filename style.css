@@ -5,6 +5,12 @@ body {
 	align-items: center;
 }
 
+#midSection {
+	display: flex;
+	gap:  60px;
+	align-items: center;
+}
+
 #calculatorBody {
 	flex: auto;
 	display: flex;
