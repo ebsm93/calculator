@@ -78,6 +78,8 @@ function logKey(e) {
   } else if (e.key === 'Control') {
   	togglePosNeg();
   } else if (e.key === 'Enter') {
+  	equalsBtn.style.active.borderColor = 'whitesmoke';
+  	// equalsBtn.style.borderColor = '';
   	equalizer();
   } else if (e.key === 'Delete') {
   	resetCalc();
@@ -96,7 +98,7 @@ function equalizer() {
 			operand2.number = operand2.number.replace('.','');
 		}
 		storedEquationDisplay();
-		
+
 		result = doMath();
 		operand2.number = '';
 		operand2.polarity = '';
@@ -185,6 +187,7 @@ function operatorInput(selection) {
 
 	if (operand1.number === '0') {
 		//do nothing
+		operator = selection;
 	}	else if (operand1.number.slice(-1) === '.'){	
 		operand1.number = operand1.number.replace('.','');
 		operator = selection;
