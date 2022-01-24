@@ -40,31 +40,23 @@ let operand2 = {
 	}
 };
 
+display();
 
 posNegBtn.addEventListener('click', togglePosNeg)
 equalsBtn.addEventListener('click', equalizer);
 clearBtn.addEventListener('click', resetCalc);
 backspaceBtn.addEventListener('click', backspace);
 document.addEventListener('keyup', logKey);
-display();
 
-function backspace() {
+const digits = document.querySelectorAll('.digit');
+digits.forEach(d => {
+	d.addEventListener('click',clickDigit);
+}); 
 
-	if (operand2.number !== '') {
-		operand2.number = operand2.number.slice(0,-1);
-	} else if (operand1.number !== '' && operator !== ''){
-		operator = '';
-	} else if (operand1.number !== '') {
-		operand1.number = operand1.number.slice(0,-1);
-	}
-
-	if (operand1.number === '') {
-		resetCalc();
-	}
-
-	display();
-
-}
+const operators = document.querySelectorAll('.operator');
+operators.forEach(o => {
+	o.addEventListener('click',clickOperator);
+}); 
 
 function logKey(e) {
 	// console.log(e.key);
@@ -89,6 +81,35 @@ function logKey(e) {
 
 }
 
+function digitInput(digit) {
+
+	if (operator === '') {
+		constructOp1(digit);
+	} else if (operator !== '') {
+		constructOp2(digit)
+	}
+	display();
+}
+
+function operatorInput(selection) {
+
+	if (operand1.number === '0') {
+		//do nothing
+		operator = selection;
+	}	else if (operand1.number.slice(-1) === '.'){	
+		operand1.number = operand1.number.replace('.','');
+		operator = selection;
+	} else if (operand2.number !== '') {
+		console.log('operator equalizer');
+		equalizer();
+		operator = selection;
+	} else {
+		operator = selection;
+	}
+
+	display();
+
+}
 
 function equalizer() {
 
@@ -114,18 +135,7 @@ function equalizer() {
 		}
 
 		display();
-
 	}
-
-function storedEquationDisplay() {
-	if (storedEquation.textContent === '') {
-		storedEquation.textContent = `${operand1.value()} ${operator} ${operand2.value()}`
-	}	else if (storedEquation.textContent !== '') {
-		storedEquation.textContent += `${operator} ${operand2.value()}`
-	}
-
-}
-
 }
 
 function doMath() {
@@ -144,63 +154,6 @@ function doMath() {
   } else if (opt === '^') {
   	return (op1 ** op2);
   }
-}
-
-
-
-const digits = document.querySelectorAll('.digit');
-digits.forEach(d => {
-	d.addEventListener('click',clickDigit);
-}); 
-
-
-const operators = document.querySelectorAll('.operator');
-operators.forEach(o => {
-	o.addEventListener('click',clickOperator);
-}); 
-
-
-
-function digitInput(digit) {
-
-	if (operator === '') {
-		constructOp1(digit);
-	} else if (operator !== '') {
-		constructOp2(digit)
-	}
-	display();
-}
-
-function clickDigit() {
-	console.log('click');
-	digitInput(this.textContent);
-}
-
-function clickOperator() {
-	console.log('click');
-	operatorInput(this.textContent);
-}
-
-
-
-function operatorInput(selection) {
-
-	if (operand1.number === '0') {
-		//do nothing
-		operator = selection;
-	}	else if (operand1.number.slice(-1) === '.'){	
-		operand1.number = operand1.number.replace('.','');
-		operator = selection;
-	} else if (operand2.number !== '') {
-		console.log('operator equalizer');
-		equalizer();
-		operator = selection;
-	} else {
-		operator = selection;
-	}
-
-	display();
-
 }
 
 function togglePosNeg() {
@@ -250,6 +203,24 @@ function constructOp2(digit) {
 		operand2.number += digit;
 	}
 }
+
+function backspace() {
+
+	if (operand2.number !== '') {
+		operand2.number = operand2.number.slice(0,-1);
+	} else if (operand1.number !== '' && operator !== ''){
+		operator = '';
+	} else if (operand1.number !== '') {
+		operand1.number = operand1.number.slice(0,-1);
+	}
+
+	if (operand1.number === '') {
+		resetCalc();
+	}
+
+	display();
+
+}
   
 function resetCalc() { 
 	operand1.number = '0';
@@ -261,6 +232,15 @@ function resetCalc() {
 	display();
 }
 
+function clickDigit() {
+	console.log('click');
+	digitInput(this.textContent);
+}
+
+function clickOperator() {
+	console.log('click');
+	operatorInput(this.textContent);
+}
 
 function display() {
 	mainDisplay.textContent = `${operand1.value()} ${operator} ${operand2.value()}`;
@@ -268,4 +248,13 @@ function display() {
 
 function displayEquation() {
 	storedEquation.textContent = `${operand1.value()} ${operator} ${operand2.value()}`;
+}
+
+function storedEquationDisplay() {
+	if (storedEquation.textContent === '') {
+		storedEquation.textContent = `${operand1.value()} ${operator} ${operand2.value()}`
+	}	else if (storedEquation.textContent !== '') {
+		storedEquation.textContent += `${operator} ${operand2.value()}`
+	}
+
 }

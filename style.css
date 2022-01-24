@@ -7,8 +7,12 @@ body {
 
 #midSection {
 	display: flex;
-	gap:  60px;
+	gap: 90px;
 	align-items: center;
+}
+
+#legend {
+	margin-left: -280px;
 }
 
 #calculatorBody {
