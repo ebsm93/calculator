@@ -70,8 +70,6 @@ function logKey(e) {
   } else if (e.key === 'Control') {
   	togglePosNeg();
   } else if (e.key === 'Enter') {
-  	equalsBtn.style.active.borderColor = 'whitesmoke';
-  	// equalsBtn.style.borderColor = '';
   	equalizer();
   } else if (e.key === 'Delete') {
   	resetCalc();
